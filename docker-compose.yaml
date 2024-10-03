@@ -28,7 +28,7 @@ services:
     networks:
       - app-network
     command: >
-      sh -c "composer install && php -S 0.0.0.0:8080 -t public"
+      sh -c "composer install & php bin/console doctrine:migrations:migrate --no-interaction && php -S 0.0.0.0:8080 -t public"
     ports:
       - "8080:8080"
 
