@@ -1,4 +1,19 @@
+version: '3.8'
+
 services:
+  submodule:
+    build:
+      context: .
+      dockerfile: Dockerfile.submodule
+    container_name: submodule
+    volumes:
+      - ./backend:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - app-network
+    command: >
+      sh -c "[ -d .git/modules ] || (git submodule init && git submodule update)"
+
   symfony:
     build:
       context: ./backend
@@ -9,6 +24,7 @@ services:
     working_dir: /var/www/html
     depends_on:
       - db
+      - submodule
     networks:
       - app-network
     command: >
@@ -27,7 +43,7 @@ services:
     networks:
       - app-network
     command: >
-      sh -c "npm install && npm run dev" nextjs:
+      sh -c "npm install && npm run dev"
     ports:
       - "3000:3000"
 
