@@ -1,0 +1,55 @@
+services:
+  symfony:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: symfony
+    volumes:
+      - ./backend:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - db
+    networks:
+      - app-network
+    command: >
+      sh -c "composer install && php -S 0.0.0.0:8080 -t public"
+    ports:
+      - "8080:8080"
+
+  nextjs:
+    image: node:18
+    container_name: nextjs
+    volumes:
+      - ./frontend:/usr/src/app
+    working_dir: /usr/src/app
+    depends_on:
+      - symfony
+    networks:
+      - app-network
+    command: >
+      sh -c "npm install && npm run dev" nextjs:
+    ports:
+      - "3000:3000"
+
+  db:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: onesign
+      MYSQL_USER: onesign
+      MYSQL_PASSWORD: onesign
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+    ports:
+      - "3306:3306"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
