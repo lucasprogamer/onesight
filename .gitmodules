@@ -1,6 +1,6 @@
-[submodule "frontend"]
-	path = frontend
-	url = git@github.com:lucasprogamer/onesight-frontend.git
 [submodule "backend"]
-	path = backend
-	url = git@github.com:lucasprogamer/onesight-backend.git
+    path = backend
+    url = https://github.com/lucasprogamer/onesight-backend.git
+[submodule "frontend"]
+    path = frontend
+    url = https://github.com/lucasprogamer/onesight-frontend.git
