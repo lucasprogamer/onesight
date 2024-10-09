@@ -1,9 +1,4 @@
-
-markdown
-
-Copiar código
-
-`# Schedule API
+# Schedule API
 
 Este projeto é uma API para gerenciar eventos em uma agenda, permitindo listar, criar, atualizar e excluir eventos com data, descrição e prioridade. O backend é construído utilizando o Symfony, enquanto o frontend pode ser desenvolvido com Next.js.
 
