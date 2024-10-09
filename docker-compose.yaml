@@ -1,22 +1,7 @@
-version: '3.8'
-
 services:
-  submodule:
-    build:
-      context: .
-      dockerfile: Dockerfile.submodule
-    container_name: submodule
-    volumes:
-      - ./backend:/var/www/html
-    working_dir: /var/www/html
-    networks:
-      - app-network
-    command: >
-      sh -c "[ -d .git/modules ] || (git submodule init && git submodule update)"
-
   symfony:
     build:
-      context: ./
+      context: ./backend
       dockerfile: Dockerfile.php
     container_name: symfony
     volumes:
@@ -24,16 +9,15 @@ services:
     working_dir: /var/www/html
     depends_on:
       - db
-      - submodule
     networks:
       - app-network
     command: >
-      sh -c "composer install & php bin/console doctrine:migrations:migrate --no-interaction && php -S 0.0.0.0:8080 -t public"
+      sh -c "composer install && php bin/console doctrine:migrations:migrate && php -S 0.0.0.0:8080 -t public"
     ports:
       - "8080:8080"
 
   nextjs:
-    image: node:18
+    image: node:20
     container_name: nextjs
     volumes:
       - ./frontend:/usr/src/app
