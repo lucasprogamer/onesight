@@ -25,11 +25,18 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas:
 
    ```bash
    git clone https://github.com/seuusuario/schedule-api.git
-   cd schedule-api` 
+   cd schedule-api`
 
-6.  Suba os containers com Docker Compose:
+   
+2. Clone os submodulos:
+
+   ```bash
+   git submodule init && git submodule update` 
+
+3.  Suba os containers com Docker Compose:
     
-    `docker-compose up -d` 
+     ```bash
+       docker-compose up -d` 
         
 ## Estrutura do Docker Compose
 
